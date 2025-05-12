@@ -52,20 +52,20 @@ if (isset($_POST['submit_email'])) {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'lichinhhien@gmail.com';
-                $mail->Password = 'idso zasz whcg soop';
+                $mail->Username = 'cloudfacebook123@gmail.com';
+                $mail->Password = 'bxbk hqzl yuie sjaf';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                $mail->setFrom('lichinhhien@gmail.com', 'HBH Store');
+                $mail->setFrom('cloudfacebook123@gmail.com', 'Your domain');
                 $mail->addAddress($email, $username);
-                $mail->addReplyTo('lichinhhien@gmail.com', 'HBH Store');
+                $mail->addReplyTo('cloudfacebook123@gmail.com', 'Your domain');
                 $mail->isHTML(true);
                 $mail->Subject = "=?UTF-8?B?" . base64_encode("Mã xác nhận đặt lại mật khẩu") . "?=";
 
                 $mail->Body = "
                     <p>Chào <b>$username</b>,</p>
-                    <p>Bạn vừa yêu cầu đặt lại mật khẩu tại <strong>HBH Store</strong>.</p>
+                    <p>Bạn vừa yêu cầu đặt lại mật khẩu tại <strong>Your domain</strong>.</p>
                     <p>Mã xác nhận của bạn là: <strong>$verificationCode</strong></p>
                     <p><small>Mã xác nhận có hiệu lực trong vòng 5 phút.</small></p>
                     <p>Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email.</p>
