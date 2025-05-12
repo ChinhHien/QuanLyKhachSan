@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đang chờ xác minh...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .box {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+        }
+        .timer {
+            font-size: 2em;
+            color: #e74c3c;
+            margin: 15px 0;
+        }
+        .resend-btn {
+            display: none;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>Đã gửi lại email xác minh</h2>
+    <p>Chúng tôi đã gửi một liên kết xác minh đến địa chỉ email bạn vừa đăng ký.</p>
+    <p>Liên kết sẽ hết hạn trong:</p>
+    <div class="timer" id="countdown">60</div>
+
+    <div class="resend-btn" id="resend">
+        <p>Liên kết đã hết hạn?</p>
+        <button onclick="location.href='../resend_verification.php'">Gửi lại mã xác minh</button>
+    </div>
+</div>
+
+<script>
+    let timeLeft = 60;
+    const countdownEl = document.getElementById("countdown");
+    const resendBox = document.getElementById("resend");
+
+    const timer = setInterval(() => {
+        timeLeft--;
+        countdownEl.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            countdownEl.textContent = "Hết hạn";
+            resendBox.style.display = 'block';
+        }
+    }, 1000);
+</script>
+</body>
+</html>
