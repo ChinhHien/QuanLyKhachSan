@@ -2,11 +2,6 @@
 session_start();
 include('config/db.php');
 
-if (!isset($_SESSION['id']) || $_SESSION['role'] != 'Customer') {
-    header('Location: login.php');
-    exit();
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -17,12 +12,6 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] != 'Customer') {
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome to the Customer Page</h1>
-    <p>This is a protected page for customers only.</p>
-    <a href="logout.php">Logout</a>
-
-    <script>
-        // JavaScript code can be added here if needed
-    </script>
+    
 </body>
 </html>

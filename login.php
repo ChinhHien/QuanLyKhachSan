@@ -82,7 +82,7 @@ if (isset($_POST["user"]) && isset($_POST["pass"])) {
 <html lang="vi">
 
 <head>
-    <title>Đăng nhập | </title>
+    <title>Đăng nhập</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/bootstrap4.5.2.min.css">

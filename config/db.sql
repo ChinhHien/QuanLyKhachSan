@@ -64,6 +64,7 @@ CREATE TABLE room_types (
     price_per_hour INT,
 	price_per_day INT,
     max_amounts INT,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
 	image VARCHAR(255)
 );
 
@@ -189,3 +190,24 @@ CREATE TABLE password_resets (
 -- Mặc định admin
 INSERT INTO users (username, password, email, role) VALUES 
 ('admin', '123456', 'admin@gmail.com', 'Admin');
+
+-- Mặc định user
+INSERT INTO users (username, password, email, role) VALUES 
+('Hien', '123456', 'Hien@gmail.com', 'Customer');
+
+INSERT INTO room_types (id, typename, description, price_per_hour, price_per_day, max_amounts, rating, image) VALUES
+(1, 'Phòng đơn', 'Phòng dành cho 1 người, đầy đủ tiện nghi cơ bản.', 50000, 300000, 1, 4, 'single_room.jpg'),
+(2, 'Phòng đôi', 'Phòng dành cho 2 người, giường đôi, tiện nghi đầy đủ.', 80000, 500000, 2, 4.5,  'double_room.jpg'),
+(3, 'Phòng gia đình', 'Phòng rộng rãi phù hợp cho gia đình, có thể ở 4 người.', 120000, 800000, 4, 5, 'family_room.jpg');
+
+INSERT INTO rooms (id, name, type_id, description, status, image) VALUES
+(101, 'Phòng 101', 1, 'Phòng đơn tầng 1, gần sảnh lễ tân.', 'Còn trống', 'room101.jpg'),
+(102, 'Phòng 102', 2, 'Phòng đôi tầng 1, có cửa sổ hướng vườn.', 'Đã đặt', 'room102.jpg'),
+(201, 'Phòng 201', 3, 'Phòng gia đình tầng 2, có ban công.', 'Còn trống', 'room201.jpg'),
+(202, 'Phòng 202', 2, 'Phòng đôi tầng 2, gần thang máy.', 'Bảo trì', 'room202.jpg');
+
+INSERT INTO service (name, description, price, unit, status, image) VALUES
+('Giặt ủi', 'Dịch vụ giặt ủi quần áo trong ngày.', 20000, '1 kg', 'Khả dụng', 'laundry.jpg'),
+('Bữa sáng', 'Bữa sáng tự chọn tại nhà hàng tầng trệt.', 50000, 'suất', 'Khả dụng', 'breakfast.jpg'),
+('Thuê xe máy', 'Dịch vụ cho thuê xe máy trong ngày.', 120000, 'ngày', 'Khả dụng', 'motorbike.jpg'),
+('Spa', 'Liệu trình spa thư giãn 60 phút.', 300000, 'suất', 'Không khả dụng', 'spa.jpg');
