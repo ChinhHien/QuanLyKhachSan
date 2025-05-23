@@ -340,6 +340,7 @@ body {
   max-width: 300px;
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
   transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
 }
 
 .alert-success-custom {
@@ -460,7 +461,7 @@ body {
 }
 
 .fade-alert {
-  animation: fadeInOut 4s forwards;
+  animation: fadeInOut 3s forwards;
 }
 
 .content-wrapper {
@@ -473,4 +474,10 @@ body {
 .container-fluid {
   max-width: 1200px;
   width: 100%;
+}
+
+.a-nostyle {
+    color: inherit !important;        /* Không đổi màu */
+    text-decoration: none !important; /* Không gạch chân */
+    transition: none !important;      /* Không hiệu ứng chuyển động */
 }

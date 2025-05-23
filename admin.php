@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
 <body>
     <?php
     if (isset($_GET['message'])) {
-        echo '<div id="alert-box" class="alert-custom alert-success-custom">' . htmlspecialchars(($_GET['message'])) . '</div>';
+        echo '<div id="alert-box" class="fade-alert alert-custom alert-success-custom">' . htmlspecialchars(($_GET['message'])) . '</div>';
     }
     ?>
 
@@ -93,8 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <i class="fas fa-store-alt me-2"></i>
-                <span>Admin</span>
+                <a href="admin.php?tab=account" class="a-nostyle">
+                    <i class="fas fa-store-alt me-2"></i>
+                    <span>Admin</span>
+                </a>
             </div>
 
             <div class="list-group">
@@ -118,13 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                     <i class="fas fa-shopping-cart"></i>
                     <span>Quản lý đơn đặt phòng</span>
                 </a>
-                <a href="#manage-employees" class="list-group-item list-group-item-action <?php echo ($active_tab == 'employees') ? 'active' : ''; ?>" data-bs-toggle="list">
+                <a href="#manage-users" class="list-group-item list-group-item-action <?php echo ($active_tab == 'users') ? 'active' : ''; ?>" data-bs-toggle="list">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Quản lý nhân viên</span>
-                </a>
-                <a href="#manage-customers" class="list-group-item list-group-item-action <?php echo ($active_tab == 'customers') ? 'active' : ''; ?>" data-bs-toggle="list">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Quản lý khách hàng</span>
+                    <span>Quản lý người dùng</span>
                 </a>
                 <a href="#manage-revenue" class="list-group-item list-group-item-action <?php echo ($active_tab == 'revenue') ? 'active' : ''; ?>" data-bs-toggle="list">
                     <i class="fas fa-chart-line"></i>
@@ -284,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                                         <a href='edit_room.php?id=" . $room['id'] . "' class='btn btn-primary-dashboard btn-sm'>
                                                             <i class='fas fa-edit me-1'></i>Sửa
                                                         </a>
-                                                        <a href='delete_room.php?id=" . $room['id'] . "' class='btn btn-danger-dashboard btn-sm ms-1' onclick='return confirm(\"Bạn có chắc chắn muốn xóa sản phẩm này không?\")'>
+                                                        <a href='delete_room.php?id=" . $room['id'] . "' class='btn btn-danger-dashboard btn-sm ms-1' onclick='return confirm(\"Bạn có chắc chắn muốn xóa phòng này không?\")'>
                                                             <i class='fas fa-trash-alt me-1'></i>Xóa
                                                         </a>
                                                     </td>";
@@ -303,7 +301,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                         <div class="page-header">
                             <h3>Quản lý loại phòng</h3>
                             <!-- Tạo trang thêm loại phòng -->
-                            <a href="add_room_type.php" class="btn btn-success-dashboard">
+                            <a href="add_type.php" class="btn btn-success-dashboard">
                                 <i class="fas fa-plus me-1"></i>Thêm loại phòng
                             </a>
                         </div>
@@ -385,7 +383,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                                         <a href='edit_type.php?id=" . $type['id'] . "' class='btn btn-primary-dashboard btn-sm'>
                                                             <i class='fas fa-edit me-1'></i>Sửa
                                                         </a>
-                                                        <a href='delete_type.php?id=" . $type['id'] . "' class='btn btn-danger-dashboard btn-sm ms-1' onclick='return confirm(\"Bạn có chắc chắn muốn xóa sản phẩm này không?\")'>
+                                                        <a href='delete_type.php?id=" . $type['id'] . "' class='btn btn-danger-dashboard btn-sm ms-1' onclick='return confirm(\"Bạn có chắc chắn muốn xóa loại phòng này không?\")'>
                                                             <i class='fas fa-trash-alt me-1'></i>Xóa
                                                         </a>
                                                     </td>";
@@ -483,10 +481,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                                 echo "<td>" . htmlspecialchars($service['unit']) . "</td>";
                                                 echo "<td>" . htmlspecialchars($service['status']) . "</td>";
                                                 echo "<td>
-                                                        <a href='edit_type.php?id=" . $service['id'] . "' class='btn btn-primary-dashboard btn-sm'>
+                                                        <a href='edit_service.php?id=" . $service['id'] . "' class='btn btn-primary-dashboard btn-sm'>
                                                             <i class='fas fa-edit me-1'></i>Sửa
                                                         </a>
-                                                        <a href='delete_type.php?id=" . $service['id'] . "' class='btn btn-danger-dashboard btn-sm ms-1' onclick='return confirm(\"Bạn có chắc chắn muốn xóa sản phẩm này không?\")'>
+                                                        <a href='delete_service.php?id=" . $service['id'] . "' class='btn btn-danger-dashboard btn-sm ms-1' onclick='return confirm(\"Bạn có chắc chắn muốn xóa dịch vụ này không?\")'>
                                                             <i class='fas fa-trash-alt me-1'></i>Xóa
                                                         </a>
                                                     </td>";
@@ -618,16 +616,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
 
                                             $stmt->execute();
                                             $result = $stmt->get_result();
-                                            while ($order = $result->fetch_assoc()) {
+                                            while ($contact = $result->fetch_assoc()) {
                                                 echo "<tr>";
-                                                echo "<td>#" . htmlspecialchars($order['id']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($order['username']) . "</td>";
-                                                echo "<td>" . number_format($order['total_price'], 0, ',', '.') . "₫</td>";
-                                                echo "<td>" . date('d/m/Y H:i', strtotime($order['order_date'])) . "</td>";
+                                                echo "<td>#" . htmlspecialchars($contact['id']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($contact['username']) . "</td>";
+                                                echo "<td>" . number_format($contact['total_price'], 0, ',', '.') . "₫</td>";
+                                                echo "<td>" . date('d/m/Y H:i', strtotime($contact['order_date'])) . "</td>";
 
                                                 // Trạng thái
                                                 $badge = "";
-                                                switch ($order['status']) {
+                                                switch ($contact['status']) {
                                                     case 'Chờ xác nhận':
                                                         $badge = '<span class="badge badge-warning"><i class="fas fa-clock me-1"></i>Chờ xác nhận</span>';
                                                         break;
@@ -645,27 +643,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
 
                                                 // Hành động
                                                 echo "<td>";
-                                                echo "<a href='order_details.php?id={$order['id']}&source_tab=contacts' class='btn btn-info-dashboard btn-sm me-1'>
+                                                echo "<a href='contact_details.php?id={$contact['id']}&source_tab=contacts' class='btn btn-info-dashboard btn-sm me-1'>
                                     <i class='fas fa-eye me-1'></i>Chi tiết
                                   </a>";
-                                                switch ($order['status']) {
+                                                switch ($contact['status']) {
                                                     case 'Chờ xác nhận':
-                                                        echo "<form action='order_actions.php' method='POST' style='display:inline-block;'>
-                                            <input type='hidden' name='confirm_id' value='{$order['id']}'>
-                                            <button type='submit' name='confirm_order' class='btn btn-success-dashboard btn-sm' onclick='return confirm(\"Xác nhận thao tác?\")'>
+                                                        echo "<form action='contact_actions.php' method='POST' style='display:inline-block;'>
+                                            <input type='hidden' name='confirm_id' value='{$contact['id']}'>
+                                            <button type='submit' name='confirm_contact' class='btn btn-success-dashboard btn-sm' onclick='return confirm(\"Xác nhận thao tác?\")'>
                                                 <i class='fas fa-check me-1'></i>Xác nhận
                                             </button>
                                           </form>
-                                          <form action='order_actions.php' method='POST' style='display:inline-block; margin-left: 5px;'>
-                                            <input type='hidden' name='cancel_id' value='{$order['id']}'>
+                                          <form action='contact_actions.php' method='POST' style='display:inline-block; margin-left: 5px;'>
+                                            <input type='hidden' name='cancel_id' value='{$contact['id']}'>
                                             <button type='submit' name='cancel_order' class='btn btn-danger-dashboard btn-sm' onclick='return confirm(\"Xác nhận thao tác?\")'>
                                                 <i class='fas fa-times me-1'></i>Hủy
                                             </button>
                                           </form>";
                                                         break;
                                                     case 'Đã xác nhận':
-                                                        echo "<form action='order_actions.php' method='POST' style='display:inline-block;'>
-                                            <input type='hidden' name='complete_id' value='{$order['id']}'>
+                                                        echo "<form action='contact_actions.php' method='POST' style='display:inline-block;'>
+                                            <input type='hidden' name='complete_id' value='{$contact['id']}'>
                                             <button type='submit' name='complete_order' class='btn btn-primary-dashboard btn-sm' onclick='return confirm(\"Xác nhận thao tác?\")'>
                                                 <i class='fas fa-check-circle me-1'></i>Hoàn thành
                                             </button>
@@ -693,33 +691,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                         </div>
                     </div>
 
-                    <!-- Quản lý nhân viên -->
-                    <div class="tab-pane fade <?php echo ($active_tab == 'employees') ? 'show active' : ''; ?>" id="manage-employees">
+                    <!-- Quản lý tài khoản -->
+                    <div class="tab-pane fade <?php echo ($active_tab == 'users') ? 'show active' : ''; ?>" id="manage-users">
                         <div class="page-header">
-                            <h3>Quản lý nhân viên</h3>
+                            <h3>Quản lý người dùng</h3>
+                            <a href="add_user.php" class="btn btn-success-dashboard">
+                                <i class="fas fa-plus me-1"></i>Thêm người dùng
+                            </a>
                         </div>
 
                         <div class="card mb-3">
                             <div class="card-body">
                                 <form action="" method="GET" class="row g-3 align-items-center">
-                                    <input type="hidden" name="tab" value="employees">
+                                    <input type="hidden" name="tab" value="users">
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" name="employee_name" placeholder="Tìm theo tên nhân viên..." value="<?php echo isset($_GET['employee_name']) ? htmlspecialchars($_GET['employee_name']) : ''; ?>">
+                                            <input type="text" class="form-control" name="user_name" placeholder="Tìm theo tên người dùng ..." value="<?php echo isset($_GET['user_name']) ? htmlspecialchars($_GET['user_name']) : ''; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                            <input type="text" class="form-control" name="employee_email" placeholder="Tìm theo email..." value="<?php echo isset($_GET['employee_email']) ? htmlspecialchars($_GET['employee_email']) : ''; ?>">
+                                            <input type="text" class="form-control" name="user_email" placeholder="Tìm theo email..." value="<?php echo isset($_GET['user_email']) ? htmlspecialchars($_GET['user_email']) : ''; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-primary-dashboard me-2">
                                             <i class="fas fa-search me-1"></i>Tìm kiếm
                                         </button>
-                                        <a href="admin.php?tab=employees" class="btn btn-secondary">
+                                        <a href="admin.php?tab=users" class="btn btn-secondary">
                                             <i class="fas fa-sync-alt me-1"></i>Đặt lại
                                         </a>
                                     </div>
@@ -740,22 +741,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                                 <th>Điện thoại</th>
                                                 <th>Giới tính</th>
                                                 <th>Ngày sinh</th>
+                                                <th>Role</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $query = "SELECT id, username, email, phone, gender, birthdate FROM users WHERE role = 'Employee'";
+                                            $query = "SELECT id, username, email, phone, gender, birthdate, role FROM users WHERE 1";
                                             $params = [];
 
-                                            if (!empty($_GET['employee_name'])) {
+                                            if (!empty($_GET['user_name'])) {
                                                 $query .= " AND username LIKE ?";
-                                                $params[] = '%' . $_GET['employee_name'] . '%';
+                                                $params[] = '%' . $_GET['user_name'] . '%';
                                             }
 
-                                            if (!empty($_GET['employee_email'])) {
+                                            if (!empty($_GET['user_email'])) {
                                                 $query .= " AND email LIKE ?";
-                                                $params[] = '%' . $_GET['employee_email'] . '%';
+                                                $params[] = '%' . $_GET['user_email'] . '%';
                                             }
 
                                             $query .= " ORDER BY created_at DESC";
@@ -773,122 +775,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                             $stmt->execute();
                                             $result = $stmt->get_result();
 
-                                            while ($employee = $result->fetch_assoc()) {
+                                            while ($user = $result->fetch_assoc()) {
                                                 echo "<tr>";
-                                                echo "<td>" . htmlspecialchars($employee['id']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($employee['username']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($employee['email']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($employee['phone']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($employee['gender']) . "</td>";
-                                                echo "<td>" . htmlspecialchars(date('d/m/Y', strtotime($employee['birthdate']))) . "</td>";
+                                                echo "<td>" . htmlspecialchars($user['id']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($user['username']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($user['email']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($user['phone']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($user['gender']) . "</td>";
+                                                echo "<td>" . htmlspecialchars(date('d/m/Y', strtotime($user['birthdate']))) . "</td>";
+                                                echo "<td>" . htmlspecialchars($user['role']) . "</td>";
                                                 echo "<td>
-                                    <a href='employee_details.php?id={$employee['id']}' class='btn btn-info-dashboard btn-sm'>
-                                        <i class='fas fa-eye me-1'></i>Chi tiết
-                                    </a>
-                                  </td>";
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quản lý khách hàng -->
-                    <div class="tab-pane fade <?php echo ($active_tab == 'customers') ? 'show active' : ''; ?>" id="manage-customers">
-                        <div class="page-header">
-                            <h3>Quản lý khách hàng</h3>
-                        </div>
-
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <form action="" method="GET" class="row g-3 align-items-center">
-                                    <input type="hidden" name="tab" value="customers">
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" name="customer_name" placeholder="Tìm theo tên khách hàng..." value="<?php echo isset($_GET['customer_name']) ? htmlspecialchars($_GET['customer_name']) : ''; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                            <input type="text" class="form-control" name="customer_email" placeholder="Tìm theo email..." value="<?php echo isset($_GET['customer_email']) ? htmlspecialchars($_GET['customer_email']) : ''; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary-dashboard me-2">
-                                            <i class="fas fa-search me-1"></i>Tìm kiếm
-                                        </button>
-                                        <a href="admin.php?tab=customers" class="btn btn-secondary">
-                                            <i class="fas fa-sync-alt me-1"></i>Đặt lại
-                                        </a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <!-- Bảng danh sách khách hàng -->
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="dashboard-table">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Họ tên</th>
-                                                <th>Email</th>
-                                                <th>SĐT</th>
-                                                <th>Giới tính</th>
-                                                <th>Ngày sinh</th>
-                                                <th>Hành động</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $query = "SELECT id, username, email, phone, gender, birthdate FROM users WHERE role = 'Customer'";
-                                            $params = [];
-
-                                            if (!empty($_GET['customer_name'])) {
-                                                $query .= " AND username LIKE ?";
-                                                $params[] = '%' . $_GET['customer_name'] . '%';
-                                            }
-
-                                            if (!empty($_GET['customer_email'])) {
-                                                $query .= " AND email LIKE ?";
-                                                $params[] = '%' . $_GET['customer_email'] . '%';
-                                            }
-
-                                            $query .= " ORDER BY created_at DESC";
-
-                                            $stmt = $conn->prepare($query);
-                                            if ($stmt === false) {
-                                                die("Lỗi truy vấn: " . $conn->error);
-                                            }
-
-                                            if (!empty($params)) {
-                                                $types = str_repeat('s', count($params));
-                                                $stmt->bind_param($types, ...$params);
-                                            }
-
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-
-                                            while ($customer = $result->fetch_assoc()) {
-                                                echo "<tr>";
-                                                echo "<td>" . htmlspecialchars($customer['id']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($customer['username']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($customer['email']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($customer['phone']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($customer['gender']) . "</td>";
-                                                echo "<td>" . htmlspecialchars(date('d/m/Y', strtotime($customer['birthdate']))) . "</td>";
-                                                echo "<td>
-                                    <a href='customer_details.php?id={$customer['id']}' class='btn btn-info-dashboard btn-sm'>
-                                        <i class='fas fa-eye me-1'></i>Chi tiết
-                                    </a>
-                                  </td>";
+                                                        <a href='user_details.php?id={$user['id']}' class='btn btn-info-dashboard btn-sm'>
+                                                            <i class='fas fa-eye me-1'></i>Chi tiết
+                                                        </a>
+                                                    </td>";
                                                 echo "</tr>";
                                             }
                                             ?>
