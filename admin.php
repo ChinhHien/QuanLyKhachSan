@@ -82,6 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
     if (isset($_GET['message'])) {
         echo '<div id="alert-box" class="fade-alert alert-custom alert-success-custom">' . htmlspecialchars(($_GET['message'])) . '</div>';
     }
+    if (isset($_GET['error'])) {
+        echo '<div id="alert-box" class="fade-alert alert-custom alert-danger-custom">' . htmlspecialchars($_GET['error']) . '</div>';
+    }
     ?>
 
     <!-- Mobile Toggle Button -->
@@ -508,25 +511,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                             <div class="card-body">
                                 <form action="" method="GET" class="row g-3 align-items-center">
                                     <input type="hidden" name="tab" value="contacts">
-                                    <div class="col-md-3">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                            <input type="text" class="form-control" name="order_id" placeholder="Tìm theo mã đơn hàng..." value="<?php echo isset($_GET['order_id']) ? htmlspecialchars($_GET['order_id']) : ''; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" class="form-control" name="customer_name" placeholder="Tìm theo tên khách hàng..." value="<?php echo isset($_GET['customer_name']) ? htmlspecialchars($_GET['customer_name']) : ''; ?>">
+                                            <input type="text" class="form-control" name="customer_name" placeholder="Tên khách hàng..." value="<?php echo isset($_GET['customer_name']) ? htmlspecialchars($_GET['customer_name']) : ''; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                                            <input type="text" class="form-control" name="employee_name" placeholder="Tên nhân viên..." value="<?php echo isset($_GET['employee_name']) ? htmlspecialchars($_GET['employee_name']) : ''; ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                            <input type="date" class="form-control" name="order_date" value="<?php echo isset($_GET['order_date']) ? htmlspecialchars($_GET['order_date']) : ''; ?>">
+                                            <input type="date" class="form-control" name="contact_date" value="<?php echo isset($_GET['contact_date']) ? htmlspecialchars($_GET['contact_date']) : ''; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-md-3 mb-2">
+
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                                            <input type="text" class="form-control" name="contact_id" placeholder="Mã đơn..." value="<?php echo isset($_GET['contact_id']) ? htmlspecialchars($_GET['contact_id']) : ''; ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-door-open"></i></span>
+                                            <input type="text" class="form-control" name="room_name" placeholder="Tên phòng..." value="<?php echo isset($_GET['room_name']) ? htmlspecialchars($_GET['room_name']) : ''; ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary-dashboard me-2">
                                             <i class="fas fa-search me-1"></i>Tìm kiếm
                                         </button>
@@ -534,25 +554,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                             <i class="fas fa-sync-alt me-1"></i>Đặt lại
                                         </a>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="d-flex flex-wrap">
+
+                                    <!-- Bộ lọc trạng thái -->
+                                    <div class="col-12 mt-2">
+                                        <div class="d-flex flex-wrap align-items-center">
                                             <?php
                                             $statuses = ['Chờ xác nhận', 'Đã xác nhận', 'Hoàn thành', 'Đã hủy'];
                                             $statusIcons = ['clock', 'check', 'check-circle', 'times-circle'];
                                             $statusClasses = ['warning', 'info', 'success', 'danger'];
                                             foreach ($statuses as $index => $status) {
                                                 $checked = (isset($_GET['status']) && in_array($status, $_GET['status'])) ? 'checked' : '';
-                                                echo '<div class="form-check me-4">
-                                    <input class="form-check-input" type="checkbox" name="status[]" value="' . $status . '" id="status' . $index . '" ' . $checked . '>
-                                    <label class="form-check-label" for="status' . $index . '">
-                                        <span class="badge badge-' . $statusClasses[$index] . '"><i class="fas fa-' . $statusIcons[$index] . ' me-1"></i>' . $status . '</span>
-                                    </label>
-                                  </div>';
+                                                echo '<div class="form-check me-4 mb-2">
+                                                        <input class="form-check-input" type="checkbox" name="status[]" value="' . $status . '" id="status' . $index . '" ' . $checked . '>
+                                                        <label class="form-check-label" for="status' . $index . '">
+                                                            <span class="badge badge-' . $statusClasses[$index] . '">
+                                                                <i class="fas fa-' . $statusIcons[$index] . ' me-1"></i>' . $status . '
+                                                            </span>
+                                                        </label>
+                                                    </div>';
                                             }
                                             ?>
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
 
@@ -563,8 +588,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                     <table class="dashboard-table">
                                         <thead>
                                             <tr>
-                                                <th>Mã đơn hàng</th>
+                                                <th>ID</th>
                                                 <th>Tên khách hàng</th>
+                                                <th>Tên nhân viên</th>
+                                                <th>Tên phòng</th>
                                                 <th>Tổng tiền</th>
                                                 <th>Ngày tạo</th>
                                                 <th>Trạng thái</th>
@@ -574,32 +601,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                         <tbody>
                                             <?php
                                             $query = "
-                            SELECT contacts.id, users.username, contacts.total_price, contacts.order_date, contacts.status
-                            FROM contacts
-                            INNER JOIN users ON contacts.customer_id = users.id
-                            WHERE 1=1
-                        ";
+                                                        SELECT 
+                                                            contacts.id,
+                                                            customer.username AS customer_name,
+                                                            employee.username AS employee_name,
+                                                            rooms.name AS room_name,
+                                                            contacts.total_price,
+                                                            contacts.order_date,
+                                                            contacts.status
+                                                        FROM contacts
+                                                        INNER JOIN users AS customer ON contacts.customer_id = customer.id
+                                                        LEFT JOIN users AS employee ON contacts.employee_id = employee.id
+                                                        LEFT JOIN rooms ON contacts.room_id = rooms.id
+                                                        WHERE 1=1
+                                                    ";
                                             $params = [];
 
-                                            if (!empty($_GET['order_id'])) {
+                                            if (!empty($_GET['contact_id'])) {
                                                 $query .= " AND contacts.id = ?";
-                                                $params[] = $_GET['order_id'];
+                                                $params[] = $_GET['contact_id'];
                                             }
 
                                             if (!empty($_GET['customer_name'])) {
-                                                $query .= " AND users.username LIKE ?";
+                                                $query .= " AND customer.username LIKE ?";
                                                 $params[] = '%' . $_GET['customer_name'] . '%';
                                             }
 
-                                            if (!empty($_GET['order_date'])) {
+                                            if (!empty($_GET['contact_date'])) {
                                                 $query .= " AND DATE(contacts.order_date) = ?";
-                                                $params[] = $_GET['order_date'];
+                                                $params[] = $_GET['contact_date'];
                                             }
 
                                             if (!empty($_GET['status'])) {
                                                 $placeholders = implode(',', array_fill(0, count($_GET['status']), '?'));
                                                 $query .= " AND contacts.status IN ($placeholders)";
                                                 $params = array_merge($params, $_GET['status']);
+                                            }
+
+                                            if (!empty($_GET['room_name'])) {
+                                                $query .= " AND rooms.name LIKE ?";
+                                                $params[] = '%' . $_GET['room_name'] . '%';
                                             }
 
                                             $query .= " ORDER BY contacts.order_date DESC";
@@ -619,7 +660,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                             while ($contact = $result->fetch_assoc()) {
                                                 echo "<tr>";
                                                 echo "<td>#" . htmlspecialchars($contact['id']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($contact['username']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($contact['customer_name']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($contact['employee_name'] ?? '—') . "</td>";
+                                                echo "<td>" . htmlspecialchars($contact['room_name'] ?? '—') . "</td>";
                                                 echo "<td>" . number_format($contact['total_price'], 0, ',', '.') . "₫</td>";
                                                 echo "<td>" . date('d/m/Y H:i', strtotime($contact['order_date'])) . "</td>";
 
@@ -704,19 +747,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                             <div class="card-body">
                                 <form action="" method="GET" class="row g-3 align-items-center">
                                     <input type="hidden" name="tab" value="users">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                             <input type="text" class="form-control" name="user_name" placeholder="Tìm theo tên người dùng ..." value="<?php echo isset($_GET['user_name']) ? htmlspecialchars($_GET['user_name']) : ''; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                             <input type="text" class="form-control" name="user_email" placeholder="Tìm theo email..." value="<?php echo isset($_GET['user_email']) ? htmlspecialchars($_GET['user_email']) : ''; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-filter"></i></span>
+                                            <select name="role" class="form-control">
+                                                <option value="">Tìm theo chức vụ ...</option>
+                                                <option value="admin" <?php echo (isset($_GET['role']) && $_GET['role'] == 'admin') ? 'selected' : ''; ?>>Admin</option>
+                                                <option value="sponsor" <?php echo (isset($_GET['role']) && $_GET['role'] == 'sponsor') ? 'selected' : ''; ?>>Sponsor</option>
+                                                <option value="employee" <?php echo (isset($_GET['role']) && $_GET['role'] == 'employee') ? 'selected' : ''; ?>>Employee</option>
+                                                <option value="customer" <?php echo (isset($_GET['role']) && $_GET['role'] == 'customer') ? 'selected' : ''; ?>>Customer</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
                                         <button type="submit" class="btn btn-primary-dashboard me-2">
                                             <i class="fas fa-search me-1"></i>Tìm kiếm
                                         </button>
@@ -760,6 +815,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                                 $params[] = '%' . $_GET['user_email'] . '%';
                                             }
 
+                                            if (!empty($_GET['role'])) {
+                                                $query .= " AND role = ?";
+                                                $params[] = $_GET['role'];
+                                            }
+
                                             $query .= " ORDER BY created_at DESC";
 
                                             $stmt = $conn->prepare($query);
@@ -785,12 +845,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_account'])) {
                                                 echo "<td>" . htmlspecialchars(date('d/m/Y', strtotime($user['birthdate']))) . "</td>";
                                                 echo "<td>" . htmlspecialchars($user['role']) . "</td>";
                                                 echo "<td>
-                                                        <a href='user_details.php?id={$user['id']}' class='btn btn-info-dashboard btn-sm'>
+                                                        <a href='' class='btn btn-info-dashboard btn-sm'>
                                                             <i class='fas fa-eye me-1'></i>Chi tiết
                                                         </a>
                                                     </td>";
                                                 echo "</tr>";
                                             }
+                                            //user_details.php?id={$user['id']}
                                             ?>
                                         </tbody>
                                     </table>

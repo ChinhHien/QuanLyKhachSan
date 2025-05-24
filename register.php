@@ -62,6 +62,18 @@ if (
             $stmt->close();
         }
 
+        // Kiểm tra số điện thoại tồn tại
+        if (empty($error)) {
+            $stmt = $conn->prepare("SELECT id FROM users WHERE phone = ? UNION SELECT id FROM pending_users WHERE phone = ?");
+            $stmt->bind_param("ss", $phone, $phone);
+            $stmt->execute();
+            $stmt->store_result();
+            if ($stmt->num_rows > 0) {
+                $error = 'Số điện thoại đã được sử dụng';
+            }
+            $stmt->close();
+        }
+
         if (empty($error)) {
             $stmt_delete = $conn->prepare("DELETE FROM pending_users WHERE email = ?");
             $stmt_delete->bind_param("s", $email);
